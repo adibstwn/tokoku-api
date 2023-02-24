@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tokoku.models.dto.CreateUserDto;
 import com.tokoku.models.dto.ResponseData;
 import com.tokoku.models.entities.User;
 import com.tokoku.services.UserServiceImpl;
@@ -23,7 +24,7 @@ public class UserController {
     private UserServiceImpl userService;
 
     @PostMapping
-    public ResponseEntity<ResponseData<User>> create(@Valid @RequestBody User user, Errors errors) {
+    public ResponseEntity<ResponseData<User>> create(@Valid @RequestBody CreateUserDto dto, Errors errors) {
         ResponseData<User> responseData = new ResponseData<>();
         if (errors.hasErrors()) {
             for (ObjectError error : errors.getAllErrors()) {
@@ -34,7 +35,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
         responseData.setStatus(true);
-        responseData.setPayload(userService.saveUser(user));
+        responseData.setPayload(userService.saveUser(dto));
         return ResponseEntity.ok(responseData);
     }
 }

@@ -2,11 +2,12 @@ package com.tokoku.models.entities;
 
 import java.io.Serializable;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,7 +18,9 @@ public class UserEmail implements Serializable {
     private long id;
     private String emailUser;
     private String token;
-    private boolean emailStatus;
+    private boolean isValid;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 
     public long getId() {
         return id;
@@ -43,11 +46,20 @@ public class UserEmail implements Serializable {
         this.token = token;
     }
 
-    public boolean isEmailStatus() {
-        return emailStatus;
+    public boolean isValid() {
+        return isValid;
     }
 
-    public void setEmailStatus(boolean emailStatus) {
-        this.emailStatus = emailStatus;
+    public void setValid(boolean isValid) {
+        this.isValid = isValid;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 }

@@ -2,18 +2,16 @@ package com.tokoku.models.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "tbl_user")
@@ -22,27 +20,21 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message = "name is requiered")
     @Column(name = "user_name")
     private String name;
 
-    @NotEmpty(message = "username is required")
     @Column(name = "user_username")
     private String username;
 
-    @NotEmpty(message = "password is required")
     @Column(name = "user_password")
     private String password;
+
+    @Column(name = "user_role")
+    private Integer role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @ManyToOne
-    private UserEmail email;
-
-    @OneToOne
-    private UserRole userRole;
 
     @PrePersist
     private void onCreate() {
@@ -89,20 +81,12 @@ public class User implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public UserEmail getEmail() {
-        return email;
+    public Integer getRole() {
+        return role;
     }
 
-    public void setEmail(UserEmail email) {
-        this.email = email;
-    }
-
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
 }
